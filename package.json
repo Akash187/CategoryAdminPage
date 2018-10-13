@@ -1,0 +1,17 @@
+{
+  "name": "CateroryAdminPage",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Akash187/CategoryAdminPage.git",
+  "author": "Akash Kumar Seth",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "lodash": "^4.17.11",
+    "mongodb": "^3.1.8",
+    "mongoose": "^5.3.2",
+    "nodemon": "^1.18.4"
+  }
+}
