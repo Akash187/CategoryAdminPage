@@ -144,7 +144,7 @@ app.delete('/subcategory/:id', (req, res) => {
 });
 
 
-//post request to add items like Samsung, oppo and etc.
+//post request to add item like Samsung, oppo and etc.
 app.post('/subcategory/:id', (req, res) => {
   const id = req.params.id; //id of subcategory
   let body = _.pick(req.body, ['name', 'position']);
@@ -165,7 +165,7 @@ app.post('/subcategory/:id', (req, res) => {
 });
 
 
-//patch request to update items
+//patch request to update item
 app.patch('/item/:id1/:id2', (req, res) => {
   const id1 = req.params.id1; //id of subcategory
   const id2 = req.params.id2; //id of item to be updated
