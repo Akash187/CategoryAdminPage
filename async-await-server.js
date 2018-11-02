@@ -7,10 +7,10 @@ const {Category} = require('./modals/category');
 
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
-
+//app.use(bodyParser.urlencoded({ extended: true }));
 
 //request to get all the Categories
 app.get('/all',  async (req,res) => {
@@ -29,6 +29,8 @@ app.post('/category', async (req, res) => {
     name: req.body.name,
     detail: req.body.detail
   });
+
+  console.log(category);
 
   try {
     const doc = await category.save();
@@ -80,6 +82,23 @@ app.delete('/category/:id', async (req, res) => {
   }
 });
 
+//get request to fetch subcategory
+app.get('/subcategory/:id',  async (req,res) => {
+  const id = req.params.id; //id for subcategory
+  const body = _.pick(req.body, ['name', 'position']);
+
+  if(!ObjectID.isValid(id)){
+    res.status(404).send();
+  }
+
+  try{
+    const category = await Category.findOne({"subcategory._id":id});
+    const subcategory = category.subcategory.id(req.params.id);
+    res.send({ subcategory });
+  } catch(e){
+    res.status(400).send(e)
+  }
+});
 
 //post request to add subcategory like mobile, jeans and etc
 app.post('/category/:id', async (req, res) => {
@@ -141,11 +160,34 @@ app.delete('/subcategory/:id', async (req, res) => {
   }
 });
 
+//get request to get particular item
+app.get('/item/:id1/:id2', async (req, res) => {
+  const id1 = req.params.id1; //id of subcategory
+  const id2 = req.params.id2; //id of item to be updated
+  const body = _.pick(req.body, ['name', 'position']);
+
+  if(!ObjectID.isValid(id1)){
+    return res.status(404).send();
+  }
+  if(!ObjectID.isValid(id2)){
+    return res.status(404).send();
+  }
+
+  try{
+    const category = await Category.findOne({"subcategory._id": id1});
+    const subcategory = category.subcategory.id(id1);
+    const item = subcategory.items.id(id2);
+    res.send({ item });
+  } catch (e){
+    res.status(400).send(e);
+  }
+});
 
 //post request to add item like Samsung, oppo and etc.
 app.post('/subcategory/:id', async (req, res) => {
   const id = req.params.id; //id of subcategory
   const body = _.pick(req.body, ['name', 'position']);
+  body.parent_id = id;
 
   if(!ObjectID.isValid(id)){
     res.status(404).send();

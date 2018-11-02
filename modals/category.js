@@ -4,18 +4,23 @@ let Schema = mongoose.Schema;
 
 let ItemSchema = new Schema({
   name: {type: String, unique: true, required: true},
-  position: Number
+  position: Number,
+  parent_id : String,
+  img: String,
 });
 
 let SubCategorySchema = new Schema({
   name: {type: String, unique: true, required: true},
   position: Number,
+  img: String,
   items: [ItemSchema]
 });
 
 let CategoryModelSchema = new Schema({
   name: {type: String, unique: true, required: true},
   detail: String,
+  position: Number,
+  img: String,
   subcategory: [SubCategorySchema],
 });
 
