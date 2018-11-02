@@ -25,12 +25,10 @@ app.get('/all',  async (req,res) => {
 
 //post request to add category like electronics, men and etc.
 app.post('/category', async (req, res) => {
-  const category = new Category({
-    name: req.body.name,
-    detail: req.body.detail
+  const category = new Category({ ...req.body
   });
 
-  console.log(category);
+  //console.log(category);
 
   try {
     const doc = await category.save();
